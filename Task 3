@@ -1,0 +1,13 @@
+import csv
+
+with open('sales.csv', 'r') as csv_file:
+    spreadsheet = csv.DictReader(csv_file)
+    sales= [ ]
+
+    for row in spreadsheet:
+        monthly_sale = row['sales']
+        sales.append(monthly_sale)
+
+total_sale= sum(sales)
+
+print(total_sales)
