@@ -1,14 +1,13 @@
-#---------------------------------------#
-#Required imports may need to get relevant packages (pip install)
-#---------------------------------------#
+# Required imports may need to get relevant packages
+
 
 import csv
+from statistics import mean
 import pandas as pd
 import plotly.express as px
 
-#---------------------------------------#
-#Creating a function to read the data
-#---------------------------------------#
+
+# Creating a function to read the data
 
 
 def read_data():
@@ -21,55 +20,50 @@ def read_data():
 
     return data
 
-#---------------------------------------#
-#Code to get key figures from the sales data
-#Creating a list of sales by appending to an empty list
-#Suspect that this could be rewritten using df
-#---------------------------------------#
 
+# Code to get key figures from the sales data
 
-def sale_info():
+def sales_info():
     data = read_data()
 
     sales = []
 
     for row in data:
-        sale = int(row['sales'])
-        sales.append(sale)
+        monthly_sale = int(row['sales'])
+        sales.append(monthly_sale)
 
     total_sales = sum(sales)
     highest_sales = max(sales)
     lowest_sales = min(sales)
+    average = round(mean(sales), 2)
 
-    print('Total sales: £{}, Highest sales: £{}, Lowest sales: £{}'.format(total_sales, highest_sales, lowest_sales))
+    print('Total sales: £{}, Average sales: £{}, Highest sales: £{}, Lowest sales: £{}'
+          .format(total_sales, average, highest_sales, lowest_sales))
 
 
-sale_info()
+sales_info()
 
-#---------------------------------------#
-#Plotting the number of sales vs the month
-#df means DataFrame
-#---------------------------------------#
+# Plotting the number of sales vs the month
+# df means DataFrame
+# pd refers to pandas
 
 df = pd.read_csv('sales.csv')
 
-fig = px.line(df, x='month', y='sales', title='sales vs month')
+fig = px.line(df, x='month', y='sales', title='Sales vs Month')
 fig.show()
 
-#---------------------------------------#
-#Calculating the percentage change compared to January
-#Adding a percentage change column to the csv (pandas)
-#Plotting percentage change
-#---------------------------------------#
+
+# Calculating the percentage change compared to January
+# adding a percentage change column to the csv 
+# plotting percentage change
 
 
-def p_change(df):
-
+def p_change():
     df['Percentage Change'] = (1 - df.iloc[0].sales / df.sales) * 100
     df.to_csv('sales.csv', index=False, header=True)
 
-    fig = px.line(df, x='month', y='Percentage Change', title='Percentage Change')
+    fig = px.line(df, x='month', y='Percentage Change', title='Percentage Change Compared to Jan')
     fig.show()
 
 
-p_change(df)
+p_change()
