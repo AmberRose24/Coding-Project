@@ -1,0 +1,14 @@
+with open('sales.csv','r') as csv_file:
+    spreadsheet = csv.DictReader(csv_file)
+    costs = []
+    for row in spreadsheet:
+        cost = int(row['expenditure'])
+        costs.append(cost)
+    print (costs)
+
+    total_costs = sum(costs)
+
+    print('Total costs:£{}'.format(total_costs))
+
+total_profit = total_sales - total_costs
+print('Total profit:£{}'.format(total_profit))
