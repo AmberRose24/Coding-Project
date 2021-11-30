@@ -41,7 +41,7 @@ def p_change():
     df = read_data()
 
     df['Percentage Change'] = (1 - df.iloc[0].sales / df.sales) * 100
-    df.to_csv('sales.csv', index=False, header=True)
+    df.to_csv('sales.csv', index=False)
 
     fig = px.line(df, x='month', y='Percentage Change', title='Percentage Change Compared to Jan')
     fig.show()
